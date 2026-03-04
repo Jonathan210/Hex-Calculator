@@ -261,9 +261,6 @@
             <div class="modes-container">
                 <div class="modes">
                     <span id="lbl-hex">HEX</span>
-                    <span id="lbl-dec">DEC</span>
-                    <span id="lbl-oct">OCT</span>
-                    <span id="lbl-bin">BIN</span>
                 </div>
                 <div class="values">
                     <div id="val-hex">0</div>
@@ -315,9 +312,6 @@
     <script>
         const display = document.getElementById("main-expression");
         const valHex = document.getElementById("val-hex");
-        const valDec = document.getElementById("val-dec");
-        const valOct = document.getElementById("val-oct");
-        const valBin = document.getElementById("val-bin");
 
         const bgMusic = document.getElementById("bgMusic");
         const playPauseBtn = document.getElementById("playPause");
@@ -430,9 +424,6 @@
             const n = number >>> 0;
 
             valHex.textContent = n.toString(16).toUpperCase();
-            valDec.textContent = n.toString(10);
-            valOct.textContent = n.toString(8);
-            valBin.textContent = n.toString(2).padStart(16, "0");
         }
 
         playPauseBtn.textContent = "♬";
@@ -483,6 +474,7 @@
 
 
 </html>
+
 
 
 

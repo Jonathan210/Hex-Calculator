@@ -33,7 +33,7 @@ body {
     height: 100%;
     object-fit: cover;
     z-index: -1;
-    filter: brightness(0.6);
+    filter: brightness(0.2);
 }
 
 .container {
@@ -76,15 +76,17 @@ body {
 }
 
 h1 {
+    font-size: clamp(10px, 6vw, 40px);
     color: #fff;
     text-align: center;
     font-family: 'JetBrains Mono', monospace;
 }
 
     p {
+    font-size: clamp(3px, 6vw, 20px);
     color: #fff;
     text-align: center;
-        font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .modes-container {
@@ -94,16 +96,16 @@ h1 {
 }
 
 .modes span {
-    font-weight: 700;
-    font-size: 1.3rem;
+    font-weight: 1000;
+    font-size: 1.5rem;
     color: #00bdd6;
 }
 
 .values div {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-align: right;
-    color: #fff;
+    color: #ffffff;
 }
 
 .buttons {
@@ -136,11 +138,11 @@ button:hover {
 
 /* LIGHT MODE */
 
-body.light-mode #bg-video { filter: brightness(0.4); }
+body.light-mode #bg-video { filter: brightness(0.6); }
 
 body.light-mode .display-container,
 body.light-mode .buttons-container {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.322);
     border: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -152,8 +154,16 @@ body.light-mode .modes-container {
 }
 
 body.light-mode button {
-    background: #707070;
-    color: #fff;
+    background: #ffffff9c;
+    color: #000000;
+}
+
+body.light-mode .modes span {
+    color: #000000;
+}
+
+body.light-mode .values div {
+    color: #000000;
 }
 
 body.light-mode .op { background: #FFB6C1; }
@@ -161,13 +171,13 @@ body.light-mode .equal { background: #ff782e; color: white; }
 body.light-mode .clear { background: #ff4d4d; color: white; }
 body.light-mode .play { background: #b84dff; color: white; }
 body.light-mode .backspace { background: #6b6eff; color: white; }
-body.light-mode .darkmode { background: #414141; color: white; }
+body.light-mode .darkmode { background: #b4b4b4; color: white; }
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" src="Gustixa - lemon tree.mp3" loop></audio>
+<audio id="bgMusic" src="Gustixa - lemon tree.mp3" loop preload="auto"></audio>
 
 <video autoplay muted loop id="bg-video">
     <source src="darkmode.mp4" type="video/mp4">
@@ -175,21 +185,10 @@ body.light-mode .darkmode { background: #414141; color: white; }
 
 <div class="container">
 
-    <div class="display-container hidden" id="displayPanel">
-        <div id="main-expression">0</div>
-
-        <div class="modes-container">
-            <div class="modes">
-                <span>HEX</span>
-            </div>
-            <div class="values">
-                <div id="val-hex">0</div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="buttons-container">
-        <h1>Base Converter</h1>
+        <h1>Hexadecimal Calculator</h1>
 
         <div class="buttons">
             <button class="clear">Clear</button>
@@ -225,7 +224,18 @@ body.light-mode .darkmode { background: #414141; color: white; }
 
         <p>Lim and Audrey</p>
     </div>
+<div class="display-container hidden" id="displayPanel">
+        <div id="main-expression">0</div>
 
+        <div class="modes-container">
+            <div class="modes">
+                <span>HEX</span>
+            </div>
+            <div class="values">
+                <div id="val-hex">0</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -243,10 +253,14 @@ const bgVideoSource = bgVideo.querySelector("source");
 let expression = "0";
 const OPERATORS = ["+", "−"];
 
+/* ================= BUTTON HANDLING ================= */
+
 document.querySelectorAll(".buttons button").forEach(button => {
-    if (button.id === "playPause" ||
+    if (
+        button.id === "playPause" ||
         button.classList.contains("darkmode") ||
-        button.id === "toggleDisplay") return;
+        button.id === "toggleDisplay"
+    ) return;
 
     button.addEventListener("click", () => {
         handleInput(button.textContent.trim());
@@ -257,7 +271,9 @@ function handleInput(value) {
 
     if (expression === "Error") expression = "0";
 
-    if (value === "Clear") expression = "0";
+    if (value === "Clear") {
+        expression = "0";
+    }
 
     else if (value === "⌫") {
         expression = expression.length > 1
@@ -273,9 +289,11 @@ function handleInput(value) {
     else {
         const lastChar = expression.slice(-1);
 
+        // Prevent double operators
         if (OPERATORS.includes(value) && OPERATORS.includes(lastChar)) {
             expression = expression.slice(0, -1) + value;
-        } else {
+        }
+        else {
             expression = (expression === "0" && !OPERATORS.includes(value))
                 ? value
                 : expression + value;
@@ -285,21 +303,30 @@ function handleInput(value) {
     updateDisplay();
 }
 
+/* ================= DISPLAY UPDATE ================= */
+
 function updateDisplay() {
     display.textContent = expression;
 
+    // Show decimal preview if valid HEX expression without operators
     if (/^[0-9A-Fa-f]+$/.test(expression)) {
         const decimalValue = parseInt(expression, 16);
-        valHex.textContent = decimalValue.toString(16).toUpperCase();
+        valHex.textContent = decimalValue.toString(10); // FIXED
+    } else {
+        valHex.textContent = "—";
     }
 }
+
+/* ================= CALCULATION ================= */
 
 function calculateResult() {
     try {
         if (OPERATORS.includes(expression.slice(-1))) return;
 
+        // Replace custom minus symbol
         let safe = expression.replace(/−/g, "-");
 
+        // Convert each HEX number to decimal
         safe = safe.replace(/[0-9A-F]+/gi, match => {
             return parseInt(match, 16);
         });
@@ -308,32 +335,50 @@ function calculateResult() {
 
         if (!isFinite(result)) throw new Error();
 
-        expression = Math.floor(result).toString(16).toUpperCase();
+        // Convert result back to HEX
+        expression = Math.floor(result)
+            .toString(16)
+            .toUpperCase();
+
         updateDisplay();
 
     } catch {
         expression = "Error";
         display.textContent = "Error";
+        valHex.textContent = "—";
     }
 }
 
-/* Display Toggle */
+/* ================= DISPLAY TOGGLE ================= */
+
 document.getElementById("toggleDisplay")
 .addEventListener("click", () => {
     displayPanel.classList.toggle("hidden");
 });
 
-/* Music */
+/* ================= MUSIC ================= */
+
+let isPlaying = false;
+
 playPauseBtn.addEventListener("click", () => {
-    if (bgMusic.paused) {
-        bgMusic.play().then(() => playPauseBtn.textContent = "⏸");
+    if (!isPlaying) {
+        bgMusic.play()
+            .then(() => {
+                isPlaying = true;
+                playPauseBtn.textContent = "⏸";
+            })
+            .catch(error => {
+                console.error("Playback failed:", error);
+            });
     } else {
         bgMusic.pause();
+        isPlaying = false;
         playPauseBtn.textContent = "♬";
     }
 });
 
-/* Theme */
+/* ================= THEME ================= */
+
 function applyTheme(theme) {
     if (theme === "light") {
         document.body.classList.add("light-mode");

@@ -28,14 +28,13 @@
             overflow-x: hidden;
         }
 
-        #bg-video {
-            position: fixed;
-            inset: 0;
+        /* ✅ Hidden by default */
+        .container-display {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1200px;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: brightness(0.6);
         }
 
         .container {
@@ -44,27 +43,6 @@
             gap: 30px;
             max-width: 1200px;
             width: 100%;
-        }
-
-        .container-display {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
         }
 
         .display-container,
@@ -88,59 +66,10 @@
             word-break: break-all;
         }
 
-        h1 {
-            color: #fff;
-            margin-top: 30px;
-            font-size: clamp(1.2rem, 3vw, 2.5rem);
-            text-align: center;
-        }
-
-        p {
-            color: #fff;
-            margin-top: 20px;
-            margin-bottom: 5px;
-            font-size: clamp(0.8rem, 1.5vw, 1.2rem);
-            font-family: 'JetBrains Mono', monospace;
-            text-align: center;
-        }
-
-        
-
-        .modes-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            color: #fff;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .modes span {
-            display: block;
-            margin: 6px 0;
-            font-weight: 700;
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            color: #00bdd6;
-        }
-
-        .values div {
-            font-family: 'JetBrains Mono', monospace;
-            margin: 6px 0;
-            color: #ffffff;
-            text-align: right;
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-        }
-
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
-        }
-
-        @media (max-width: 480px) {
-            .buttons {
-                gap: 8px;
-            }
         }
 
         button {
@@ -155,112 +84,17 @@
             font-weight: 600;
         }
 
-        button:hover {
-            background: #b1cf74;
-            color: #fff;
-            transform: translateY(-2px);
-        }
+        .op { background: #FFB6C1; color: white; }
+        .equal { background: #ff782e; color: white; }
+        .clear { background: #ff4d4d; color: white; }
+        .play { background: #b84dff; color: white; }
+        .backspace { background: #6b6eff; color: white; }
+        .darkmode { background: #414141; color: #fff; }
 
-        .op {
-            background: #FFB6C1;
-            color: white;
-        }
-
-        .equal {
-            background: #ff782e;
-            color: white;
-        }
-
-        .clear {
-            background: #ff4d4d;
-            color: white;
-        }
-
-        .play {
-            background: #b84dff;
-            color: white;
-        }
-
-        .backspace {
-            background: #6b6eff;
-            color: white;
-        }
-
-        .darkmode {
-            background: #414141;
-            color: #fff;
-        }
-
-        body.light-mode #bg-video {
-            filter: brightness(0.4);
-        }
-
-        body.light-mode .display-container,
-        body.light-mode .buttons-container {
-            background: rgba(255, 255, 255, 0.555);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        body.light-mode #main-expression,
-        body.light-mode h1,
-        body.light-mode .modes-container {
-            color: #222;
-        }
-
-        body.light-mode p,
-        .modes-container {
-            color: rgb(0, 0, 0);
-        }
-
-        body.light-mode .modes span {
-            color: #555;
-        }
-
-        body.light-mode button {
-            background: #707070;
-            color: #ffffff;
-        }
-
-        body.light-mode button:hover {
-            background: #b1cf74;
-            color: #fff;
-        }
-
-        body.light-mode .equal {
-            background: #ff782e;
-            color: white;
-        }
-
-        body.light-mode .clear {
-            background: #ff4d4d;
-            color: white;
-        }
-
-        body.light-mode .play {
-            background: #b84dff;
-            color: white;
-        }
-
-        body.light-mode .op {
-            background: #FFB6C1;
-            color: #000000;
-        }
-
-        body.light-mode .backspace {
-            background: #6b6eff;
-            color: white;
-        }
     </style>
 </head>
 
 <body>
-
-    <audio id="bgMusic" src="Gustixa - lemon tree.mp3" loop></audio>
-
-    <video autoplay muted loop id="bg-video">
-        <source src="download.mp4" type="video/mp4">
-    </video>
 
     <div class="container-display">
         <div class="display-container">
@@ -279,9 +113,8 @@
 
     <div class="container">
         <div class="buttons-container">
-            <h1>
-                <center>Base Converter</center>
-            </h1>
+            <h1 style="text-align:center;">Base Converter</h1>
+
             <div class="buttons">
                 <button class="clear">Clear</button>
                 <button class="backspace">⌫</button>
@@ -311,202 +144,88 @@
                 <button>1</button>
                 <button>2</button>
                 <button>3</button>
-                <button>.</button>
-            </div>
-            <p>
-            Lim and Audrey
-        </p>
-        </div>
 
-        
+                <!-- ✅ Updated Display Button -->
+                <button id="toggleDisplay">Display</button>
+            </div>
+        </div>
     </div>
 
-    <script>
-        const display = document.getElementById("main-expression");
-        const valHex = document.getElementById("val-hex");
+<script>
+const display = document.getElementById("main-expression");
+const valHex = document.getElementById("val-hex");
+const toggleDisplayBtn = document.getElementById("toggleDisplay");
+const displayContainer = document.querySelector(".container-display");
 
-        const bgMusic = document.getElementById("bgMusic");
-        const playPauseBtn = document.getElementById("playPause");
-        const darkModeBtn = document.querySelector("button.darkmode");
+let expression = "0";
+const OPERATORS = ["+", "−"];
 
-        const bgVideo = document.getElementById("bg-video");
-        const bgVideoSource = bgVideo.querySelector("source");
+/* ✅ Toggle Logic */
+toggleDisplayBtn.addEventListener("click", () => {
+    if (displayContainer.style.display === "none" || displayContainer.style.display === "") {
+        displayContainer.style.display = "grid";
+    } else {
+        displayContainer.style.display = "none";
+    }
+});
 
-        let expression = "0";
-        const OPERATORS = ["+", "−"];
+/* ✅ Prevent Display button from calculator input */
+document.querySelectorAll(".buttons button").forEach(button => {
+    if (
+        button.id === "playPause" ||
+        button.classList.contains("darkmode") ||
+        button.id === "toggleDisplay"
+    ) return;
 
-        document.querySelectorAll(".buttons button").forEach(button => {
-            if (
-                button.id === "playPause" ||
-                button.classList.contains("darkmode")
-            ) return;
+    button.addEventListener("click", () => {
+        handleInput(button.textContent.trim());
+    });
+});
 
-            button.addEventListener("click", () => {
-                handleInput(button.textContent.trim());
-            });
-        });
+function handleInput(value) {
 
-        function handleInput(value) {
-            if (expression === "Error") {
-                expression = "0";
-            }
+    if (value === "Clear") {
+        expression = "0";
+    }
 
-            if (value === "Clear") {
-                expression = "0";
-            }
+    else if (value === "⌫") {
+        expression = expression.length > 1 ? expression.slice(0, -1) : "0";
+    }
 
-            else if (value === "⌫") {
-                expression = expression.length > 1
-                    ? expression.slice(0, -1)
-                    : "0";
-            }
+    else if (value === "=") {
+        calculateResult();
+        return;
+    }
 
-            else if (value === "=") {
-                calculateResult();
-                return;
-            }
+    else {
+        expression = expression === "0" ? value : expression + value;
+    }
 
-            else {
-                const lastChar = expression.slice(-1);
+    updateDisplay();
+}
 
-                if (OPERATORS.includes(value) && OPERATORS.includes(lastChar)) {
-                    expression = expression.slice(0, -1) + value;
-                }
+function updateDisplay() {
+    display.textContent = expression;
 
-                else if (value === ".") {
-                    const parts = expression.split(/[+\−]/);
-                    const lastNumber = parts[parts.length - 1];
+    if (/^[0-9A-Fa-f]+$/.test(expression)) {
+        const decimalValue = parseInt(expression, 16);
+        valHex.textContent = decimalValue.toString(16).toUpperCase();
+    }
+}
 
-                    if (!lastNumber.includes(".")) {
-                        expression += ".";
-                    }
-                }
+function calculateResult() {
+    try {
+        let safeExpression = expression.replace(/−/g, "-");
+        safeExpression = safeExpression.replace(/[0-9A-F]+/gi, match => parseInt(match, 16));
+        const result = Function('"use strict"; return (' + safeExpression + ')')();
+        expression = Math.floor(result).toString(16).toUpperCase();
+        updateDisplay();
+    } catch {
+        expression = "Error";
+        display.textContent = "Error";
+    }
+}
+</script>
 
-                else {
-                    expression = (expression === "0" && !OPERATORS.includes(value))
-                        ? value
-                        : expression + value;
-                }
-            }
-
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            display.textContent = expression;
-
-            if (/^[0-9A-Fa-f]+$/.test(expression)) {
-                const decimalValue = parseInt(expression, 16);
-                renderBaseConversions(decimalValue);
-            }
-        }
-
-        function calculateResult() {
-            try {
-                if (OPERATORS.includes(expression.slice(-1))) {
-                    return;
-                }
-
-                let safeExpression = expression.replace(/−/g, "-");
-
-                safeExpression = safeExpression.replace(/[0-9A-F]+/gi, match => {
-                    return parseInt(match, 16);
-                });
-
-                const result = Function('"use strict"; return (' + safeExpression + ')')();
-
-                if (!isFinite(result)) {
-                    throw new Error("Invalid Math");
-                }
-
-                expression = Math.floor(result).toString(16).toUpperCase();
-
-                renderBaseConversions(result);
-                display.textContent = expression;
-
-            } catch (error) {
-                expression = "Error";
-                display.textContent = "Error";
-            }
-        }
-
-        function renderBaseConversions(number) {
-            if (isNaN(number)) return;
-
-            const n = number >>> 0;
-
-            valHex.textContent = n.toString(16).toUpperCase();
-        }
-
-        playPauseBtn.textContent = "♬";
-
-        playPauseBtn.addEventListener("click", () => {
-            if (bgMusic.paused) {
-                bgMusic.play()
-                    .then(() => {
-                        playPauseBtn.textContent = "⏸";
-                    })
-                    .catch(error => {
-                        console.log("Playback prevented:", error);
-                    });
-            } else {
-                bgMusic.pause();
-                playPauseBtn.textContent = "♬";
-            }
-        });
-
-        function applyTheme(theme) {
-            if (theme === "light") {
-                document.body.classList.add("light-mode");
-                darkModeBtn.textContent = "⚫";
-                bgVideoSource.src = "lightmode.mp4";
-            } else {
-                document.body.classList.remove("light-mode");
-                darkModeBtn.textContent = "⚪";
-                bgVideoSource.src = "darkmode.mp4";
-            }
-
-            bgVideo.load();
-            bgVideo.play();
-        }
-
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        applyTheme(savedTheme);
-
-        darkModeBtn.addEventListener("click", () => {
-            const isLight = document.body.classList.contains("light-mode");
-            const newTheme = isLight ? "dark" : "light";
-
-            applyTheme(newTheme);
-            localStorage.setItem("theme", newTheme);
-        });
-
-    </script>
 </body>
-
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

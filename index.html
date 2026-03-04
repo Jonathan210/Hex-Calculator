@@ -47,11 +47,7 @@
         }
 
         .container-display {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 1200px;
-            width: 100%;
+            display: none;
         }
 
         @media (max-width: 1024px) {
@@ -311,7 +307,7 @@
                 <button>1</button>
                 <button>2</button>
                 <button>3</button>
-                <button>.</button>
+                <button id="toggleDisplay">Display</button>
             </div>
             <p>
             Lim and Audrey
@@ -338,7 +334,8 @@
         document.querySelectorAll(".buttons button").forEach(button => {
             if (
                 button.id === "playPause" ||
-                button.classList.contains("darkmode")
+                button.classList.contains("darkmode") ||
+                button.id === "toggleDisplay"
             ) return;
 
             button.addEventListener("click", () => {
@@ -481,6 +478,21 @@
             localStorage.setItem("theme", newTheme);
         });
 
+
+        const toggleDisplayBtn = document.getElementById("toggleDisplay");
+const displayContainer = document.querySelector(".container-display");
+
+let isDisplayVisible = false;
+
+toggleDisplayBtn.addEventListener("click", () => {
+    if (!isDisplayVisible) {
+        displayContainer.style.display = "grid";
+        isDisplayVisible = true;
+    } else {
+        displayContainer.style.display = "none";
+        isDisplayVisible = false;
+    }
+});
     </script>
 </body>
 

@@ -177,6 +177,11 @@
             background: #ff006a;
             color: white;
         }
+        
+        .color {
+            background: #ffe75c;
+            color: rgb(0, 0, 0);
+        }
 
         /* .display:hover {
             background: #ff00c8;
@@ -249,7 +254,7 @@
         }
 
         body.light-mode .darkmode {
-            background: #3f3f3f;
+            background: #3f3f3fa1;
             color: white;
         }
 
@@ -260,8 +265,13 @@
         }
 
         body.light-mode .display {
-            background: #ff006a;
+            background: #ff006a91;
             color: white;
+        }
+
+        body.light-mode .color {
+            background: #ffe75cb0;
+            color: rgb(0, 0, 0);
         }
     </style>
 </head>
@@ -284,30 +294,30 @@
                 <button id="playPause" class="play">♬</button>
                 <button class="darkmode">Light</button>
 
-                <button>D</button>
-                <button>E</button>
-                <button>F</button>
-                <button id="toggleDisplay" class="display">Show</button>
-
-                <button>A</button>
-                <button>B</button>
-                <button>C</button>
+                <button class="color">D</button>
+                <button class="color">E</button>
+                <button class="color">F</button>
                 <button class="equal">=</button>
+
+                <button class="color">A</button>
+                <button class="color">B</button>
+                <button class="color">C</button>
+                <button class="op">+</button>
 
                 <button>7</button>
                 <button>8</button>
                 <button>9</button>
-                <button class="op">+</button>
+                <button class="op">−</button>
 
                 <button>4</button>
                 <button>5</button>
                 <button>6</button>
-                <button class="op">−</button>
+                <button>0</button>
 
                 <button>1</button>
                 <button>2</button>
                 <button>3</button>
-                <button>0</button>
+                <button id="toggleDisplay" class="display">Show</button>
             </div>
 
             <p>Lim and Audrey</p>
